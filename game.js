@@ -12,8 +12,8 @@ function getComputerChoice() {
 function playRound(playerSelecion, computerSelection) {
     playerchoice = playerSelecion.toLowerCase()
     let winner = ""
-    const win = "You win"
-    const lose = "You lose"
+    const win = ("You win. Computer chose " + computerSelection + ".")
+    const lose = ("You lose.  Computer chose " + computerSelection + ".")
     const draw = "Draw"
     if (playerchoice === computerSelection) {
         winner = draw
@@ -31,10 +31,53 @@ function playRound(playerSelecion, computerSelection) {
         winner = lose
     }
     return winner
+}  
+
+let score = 0
+
+function newGame (buttonSelect) {
+    const computerSelection = getComputerChoice();
+    const container = document.createElement('div');
+    const hcontainer = document.querySelector('.results')
+    container.textContent = playRound(buttonSelect, computerSelection)
+    hcontainer.appendChild(container)
+
+    if (playRound(buttonSelect, computerSelection) == "You win. Computer chose " + computerSelection + ".") {
+        score ++
+    } else if (playRound(buttonSelect, computerSelection) == "You lose.  Computer chose " + computerSelection + ".") {
+        score --
+    } 
+    const results = document.querySelector('.results')
+    const runningscore = document.createElement('runningscore')
+    runningscore.textContent = score
+    results.appendChild(runningscore)
+
+    if (score == 5) {
+        runningscore.textContent = "5 points. You win!"
+    }
+    
 }
 
+const rock = document.querySelector('#rock')
+rock.addEventListener('click', () => {
+    const buttonSelect = "rock";
+    newGame(buttonSelect);
+})
+
+const paper = document.querySelector('#paper')
+paper.addEventListener('click', () => {
+    const buttonSelect = "paper";
+    newGame(buttonSelect);
+})
+
+const scissors = document.querySelector('#scissors')
+scissors.addEventListener('click', () => {
+    const buttonSelect = "scissors";
+    newGame(buttonSelect);
+})
 
 
+/*
 function game(input) {
     let score = 0
     for (let i=0; i < 5; i++) {
@@ -53,4 +96,4 @@ function game(input) {
     score = 0
 }
 
-game(prompt("Rock, paper, or scissors?"))
+game(prompt("Rock, paper, or scissors?")) */
